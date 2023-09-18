@@ -11,7 +11,7 @@ const graphConnect = new GraphQLClient(url);
 
 const query = gql`
   query {
-    posts {
+    blogposts {
       title
       slug
       coverImage {
@@ -29,7 +29,7 @@ const query = gql`
 export async function getServerSideProps() {
 
   // making request to hygraph for posts
-  const { posts:blogposts } = await graphConnect.request(query);
+  const { blogposts } = await graphConnect.request(query);
 
   return { props: { blogposts } };
 }
