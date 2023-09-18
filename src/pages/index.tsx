@@ -29,7 +29,7 @@ const query = gql`
 export async function getServerSideProps() {
 
   // making request to hygraph for posts
-  const { blogposts } = await graphConnect.request(query);
+  const { blogposts }:any = await graphConnect.request(query);
 
   return { props: { blogposts } };
 }

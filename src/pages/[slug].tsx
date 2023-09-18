@@ -32,7 +32,7 @@ const query = gql`
 export async function getStaticPaths() {
 
   // querying for slugs from hygraph...
-  const { blogposts } = await graphConnect.request(gql`
+  const { blogposts }:any = await graphConnect.request(gql`
     query {
       blogposts {
         slug
@@ -52,7 +52,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   // making request to hygraph for each post matching a slug
-  const { blogpost } = await graphConnect.request(query, { slug: params.slug });
+  const { blogpost }:any = await graphConnect.request(query, { slug: params.slug });
   const content = blogpost.content.markdown;
 
   //serializing my markdown response from the rich text field
