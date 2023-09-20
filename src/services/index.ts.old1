@@ -1,0 +1,64 @@
+import { GraphQLClient, gql } from "graphql-request";
+import { useQuery } from "@apollo/client";
+const url = `${process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT}`;
+const graphConnect = new GraphQLClient(url);
+
+
+export const getBlogposts = async () => {
+
+  const query = gql`
+  query {
+    blogposts {
+      title
+      slug
+      coverImage {
+        url
+      }
+      excerpt
+      id
+      author {
+        name
+      }
+    }
+  }
+`;
+  const { blogposts }: any = await graphConnect.request(query);
+  return blogposts
+}
+
+export const getBlogpost = async (slug) => {
+  const query = gql`
+  query MyQuery($slug: String!) {
+    blogpost(where: { slug: $slug }) {
+      title
+      author {
+        name
+      }
+      content {
+        markdown
+      }
+      coverImage {
+        altText
+        url
+      }
+    }
+  }
+`;
+
+  const { blogpost }: any = await graphConnect.request(query, { slug: slug });
+
+  return blogpost
+}
+
+export const getSlugs = async () => {
+  const query = gql`
+  query {
+    blogposts {
+      slug
+    }
+  }
+  `
+  const { blogposts }: any = await graphConnect.request(query);
+
+  return blogposts
+}

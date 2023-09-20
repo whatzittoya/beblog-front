@@ -5,40 +5,14 @@ import Image from "next/image";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
 
-const url = `${process.env.ENDPOINT}`;
+import { getBlogpost, getSlugs } from "@/services";
 
 
-  //instantiating a graphqlclient...
-const graphConnect = new GraphQLClient(url);
-
-const query = gql`
-  query MyQuery($slug: String!) {
-    blogpost(where: { slug: $slug }) {
-      title
-      author {
-        name
-      }
-      content {
-        markdown
-      }
-      coverImage {
-        altText
-        url
-      }
-    }
-  }
-`;
 
 export async function getStaticPaths() {
 
   // querying for slugs from hygraph...
-  const { blogposts }:any = await graphConnect.request(gql`
-    query {
-      blogposts {
-        slug
-      }
-    }
-  `);
+  const blogposts: any = await getSlugs()
 
   return {
     paths: blogposts.map(({ slug }) => ({
@@ -52,7 +26,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   // making request to hygraph for each post matching a slug
-  const { blogpost }:any = await graphConnect.request(query, { slug: params.slug });
+  const blogpost: any = await getBlogpost(params.slug)
   const content = blogpost.content.markdown;
 
   //serializing my markdown response from the rich text field

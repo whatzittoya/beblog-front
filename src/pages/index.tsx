@@ -1,54 +1,63 @@
 import Head from "next/head";
 import Style from "../styles/Home.module.css";
 import Image from "next/image";
-import { GraphQLClient, gql } from "graphql-request";
+// import { GraphQLClient, gql } from "graphql-request";
 import Link from "next/link";
+import { getBlogposts } from "@/services";
+import type { InferGetServerSidePropsType } from 'next'
+import { gql, useQuery } from "@apollo/client";
+import createApolloClient from "../../apollo-client";
 
-const url = `${process.env.ENDPOINT}`;
 
-  // instantiating a graphql client...
-const graphConnect = new GraphQLClient(url);
-
-const query = gql`
-  query {
-    blogposts {
-      title
-      slug
-      coverImage {
-        url
-      }
-      excerpt
-      id
-      author {
-        name
-      }
-    }
-  }
-`;
-
-export async function getServerSideProps() {
+export async function getStaticProps() {
 
   // making request to hygraph for posts
-  const { blogposts }:any = await graphConnect.request(query);
-
+  const blogposts = await getBlogposts()
   return { props: { blogposts } };
+
+  // const client = createApolloClient();
+  // const { data } = useQuery(
+  //   gql`
+  //     query getBlogposts {
+  //     blogposts {
+  //       title
+  //       slug
+  //       coverImage {
+  //         url
+  //       }
+  //       excerpt
+  //       id
+  //       author {
+  //         name
+  //       }
+  //     }
+  //   }
+  //   `,
+  // );
+
+  // return {
+  //   props: {
+  //     blogposts: data.blogposts,
+  //   },
+  // };
 }
 
-function Homepage({ blogposts }) {
+function Homepage({ blogposts }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
         <title>Beblog</title>
       </Head>
       <main className={Style.postcontainer}>
-  {/* using array.map() method to iterate each post returned from hygraph */}
-        {blogposts.map((blogposts) => {
+        {/* using array.map() method to iterate each post returned from hygraph */}
+        {blogposts?.map((blogposts) => {
+
           return (
-            <div  key={blogposts.id}>
+            <div key={blogposts.id}>
               <div className={Style.inside}>
                 <div className={Style.img}>
                   <Image
-                    src={blogposts.coverImage.url}
+                    src={blogposts.coverImage?.url || ""}
                     alt="featured text"
                     fill
                   />
@@ -69,7 +78,7 @@ function Homepage({ blogposts }) {
         })}
       </main>
 
-   
+
     </>
   );
 }
