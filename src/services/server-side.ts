@@ -1,8 +1,13 @@
 // import { GraphQLClient, gql } from "graphql-request";
 import { useQuery } from "@apollo/client";
 import { gql } from "@/__generated__/gql";
-import createApolloClient from "../../apollo-client";
+import createApolloClient from "../provider/apollo-client";
 const client = createApolloClient();
+
+import blogpost from '../static_data/blogpost.json' assert { type: 'json' };
+import slugs from '../static_data/slugs.json' assert { type: 'json' };
+
+const localData = false
 
 export const getBlogposts = async () => {
   const GET_BLOGPOSTS = gql(/* GraphQL */ `
@@ -22,9 +27,13 @@ export const getBlogposts = async () => {
     }
   `
   )
-  const { data } = await client.query({ query: GET_BLOGPOSTS });
+  if (localData)
+    return blogpost.data
 
+  const { data } = await client.query({ query: GET_BLOGPOSTS, fetchPolicy: "network-only" });
   return data
+
+
 }
 
 export const getBlogpost = async (slug) => {
@@ -45,8 +54,14 @@ export const getBlogpost = async (slug) => {
     }
   }
   `);
+  if (localData) {
+    const filter = (blogpost.data.blogposts).filter((el) => el.slug === slug)
+    const data_filter = { blogpost: filter[0] }
+    return data_filter
+  }
 
-  const { data } = await client.query({ query: GET_BLOGPOST, variables: { slug: slug } });
+  const { data } = await client.query({ query: GET_BLOGPOST, variables: { slug: slug }, fetchPolicy: "network-only" });
+
   return data
 
 
@@ -62,7 +77,11 @@ export const getSlugs = async () => {
   `);
 
 
+  if (localData)
+    return slugs.data
+
   const { data } = await client.query({ query: GET_SLUGS });
+
   return data
 
 

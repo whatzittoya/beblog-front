@@ -6,7 +6,8 @@ import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
 
 import { getBlogpost, getSlugs } from "@/services/server-side";
-import type { InferGetServerSidePropsType } from 'next'
+import type { InferGetServerSidePropsType, GetStaticProps } from 'next'
+import { convertToObject } from "typescript";
 
 
 export async function getStaticPaths() {
@@ -24,21 +25,26 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   // making request to hygraph for each post matching a slug
-  const data = await getBlogpost(params.slug)
-  const blogpost = data.blogpost
-  const content = blogpost?.content.markdown
+
+  const data = await getBlogpost(params?.slug)
+  const blogpost = data?.blogpost
+  const content = blogpost?.content?.markdown
 
   //serializing my markdown response from the rich text field
 
-  const MdxSource = content ? await serialize(content) : await serialize("")
+  const MdxSource = content ? await serialize(content) : null
+  return { props: { post: blogpost || [], source: MdxSource }, revalidate: 10 };
 
-  //passing the post together with the serialized post.
-  return { props: { post: blogpost, source: MdxSource } };
+
+
 }
 
 function SinglePost({ post, source }: InferGetServerSidePropsType<typeof getStaticProps>) {
+  if (!post || !source) {
+    return ""
+  }
   return (
     <>
       <Head>
@@ -55,6 +61,7 @@ function SinglePost({ post, source }: InferGetServerSidePropsType<typeof getStat
         </div>
 
         <div className={Style.mdxs}>
+
           <MDXRemote {...source} />
         </div>
       </main>
