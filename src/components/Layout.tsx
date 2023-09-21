@@ -7,7 +7,7 @@ function Layout({ children }) {
     const [navActive, setNavActive] = useState(false);
 
     return (
-        <div lang="en" className='text-white mx-auto py-20 px-4 '>
+        <div lang="en" className='text-white mx-auto py-20'>
             <Nav navActive={navActive} setNavActive={setNavActive} />
             <main className={styles.main_style}>{children}</main>
         </div>
