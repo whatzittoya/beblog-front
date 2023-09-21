@@ -1,0 +1,19 @@
+{
+    "data": {
+        "blogposts": [
+            {
+                "slug": "creating-learning-platform-nextjs-13-app-router"
+            },
+            {
+                "slug": "content-federation-and-composable-architecture"
+            },
+            {
+                "slug": "welcome"
+            }
+        ]
+    },
+    "extensions": {
+        "Complexity-Cost-Left": 49999999995,
+        "Effective-Complexity-Limit": 50000000000
+    }
+}
