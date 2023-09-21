@@ -51,7 +51,7 @@ function SinglePost({ post, source }: InferGetServerSidePropsType<typeof getStat
         <title>Blog</title>
       </Head>
 
-      <main className={Style.main}>
+      <article className='prose prose-sm md:prose-base lg:prose-lg prose-slate !prose-invert mx-auto '>
         <div className={Style.header}>
           <h1>{post?.title}</h1>
           <h3>Author: {post?.author?.name}</h3>
@@ -60,11 +60,11 @@ function SinglePost({ post, source }: InferGetServerSidePropsType<typeof getStat
           <Image src={post?.coverImage?.url || ""} alt={post?.coverImage?.altText || ""} fill />
         </div>
 
-        <div className={Style.mdxs}>
+        <div >
 
           <MDXRemote {...source} />
         </div>
-      </main>
+      </article>
     </>
   );
 }

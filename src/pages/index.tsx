@@ -33,13 +33,21 @@ function Homepage({ blogposts }: InferGetServerSidePropsType<typeof getStaticPro
       <Head>
         <title>Beblog</title>
       </Head>
-      <main className={Style.postcontainer}>
+
+      <div className='py-2'>
         {/* using array.map() method to iterate each post returned from hygraph */}
         {blogposts?.map((blogposts) => {
 
           return (
-            <div key={blogposts.id}>
-              <div className={Style.inside}>
+            <Link href={blogposts.slug} passHref key={blogposts.id}>
+              <div className='py-2 flex align-middle gap-2 justify-center'>
+
+                <div className={Style.container}>
+                  <h2 className="text-lg font-bold">{blogposts.title}</h2>
+                  <p className="text-gray-400">{blogposts.excerpt}</p>
+                  <p className="text-gray-400">By {blogposts.author?.name}</p>
+
+                </div>
                 <div className={Style.img}>
                   <Image
                     src={blogposts.coverImage?.url || ""}
@@ -47,21 +55,11 @@ function Homepage({ blogposts }: InferGetServerSidePropsType<typeof getStaticPro
                     fill
                   />
                 </div>
-                <div className={Style.container}>
-                  <Link href={blogposts.slug}>
-                    <h2>{blogposts.title}</h2>
-                  </Link>
-                  <p>{blogposts.excerpt}</p>
-                  <p>By {blogposts.author?.name}</p>
-                  <Link href={blogposts.slug}>
-                    <button className={Style.readButton}>Read More</button>{" "}
-                  </Link>
-                </div>
               </div>
-            </div>
+            </Link>
           );
         })}
-      </main>
+      </div>
 
 
     </>

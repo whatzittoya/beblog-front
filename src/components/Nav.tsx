@@ -8,15 +8,15 @@ const menu_itemList = [
   { name: "About", href: "/about" },
 ];
 
-function Nav({navActive,setNavActive}) {
+function Nav({ navActive, setNavActive }) {
 
 
   return (
     <div className={Style.navBar}>
 
-      <Link href={"/"} onClick={()=>{
-          setNavActive(false)
-           }}><h1>Belajar Fisika</h1></Link>
+      <Link href={"/"} onClick={() => {
+        setNavActive(false)
+      }}><h1>Belajar Fisika</h1></Link>
       <div
         className={Style.mobiNav}
         onClick={() => {
@@ -36,7 +36,7 @@ function Nav({navActive,setNavActive}) {
               <div
                 key={menu.name}
                 onClick={() => {
-                  setNavActive(false); 
+                  setNavActive(false);
                 }}
               >
                 <Nav_menu  {...menu} />
