@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n      query getBlogposts {\n        blogposts {\n          title\n          slug\n          coverImage {\n            url\n          }\n          excerpt\n          id\n          author {\n            name\n          }\n        }\n      }\n    ": types.GetBlogpostsDocument,
     "\n    query getBlogposts {\n      blogposts {\n        title\n        slug\n        coverImage {\n          url\n        }\n        excerpt\n        id\n        author {\n          name\n        }\n      }\n    }\n  ": types.GetBlogpostsDocument,
     "\n  query getBlogpost($slug: String!) {\n    blogpost(where: { slug: $slug }) {\n      title\n      author {\n        name\n      }\n      content {\n        markdown\n      }\n      coverImage {\n        altText\n        url\n      }\n    }\n  }\n  ": types.GetBlogpostDocument,
     "\n    query getSlugs {\n      blogposts {\n        slug\n      }\n    }\n  ": types.GetSlugsDocument,
@@ -32,6 +33,10 @@ const documents = {
  */
 export function gql(source: string): unknown;
 
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n      query getBlogposts {\n        blogposts {\n          title\n          slug\n          coverImage {\n            url\n          }\n          excerpt\n          id\n          author {\n            name\n          }\n        }\n      }\n    "): (typeof documents)["\n      query getBlogposts {\n        blogposts {\n          title\n          slug\n          coverImage {\n            url\n          }\n          excerpt\n          id\n          author {\n            name\n          }\n        }\n      }\n    "];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

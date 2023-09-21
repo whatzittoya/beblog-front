@@ -1,11 +1,10 @@
 // import { GraphQLClient, gql } from "graphql-request";
 import { useQuery } from "@apollo/client";
 import { gql } from "@/__generated__/gql";
-
 import createApolloClient from "../../apollo-client";
+const client = createApolloClient();
 
 export const getBlogposts = async () => {
-  const client = createApolloClient();
   const GET_BLOGPOSTS = gql(/* GraphQL */ `
     query getBlogposts {
       blogposts {
@@ -23,8 +22,9 @@ export const getBlogposts = async () => {
     }
   `
   )
-  const { loading, data } = useQuery(GET_BLOGPOSTS);
-  return data?.blogposts
+  const { data } = await client.query({ query: GET_BLOGPOSTS });
+
+  return data
 }
 
 export const getBlogpost = async (slug) => {
@@ -46,10 +46,10 @@ export const getBlogpost = async (slug) => {
   }
   `);
 
-  const { loading, data } = useQuery(
-    GET_BLOGPOST, { variables: { slug: slug } }
-  );
-  return data?.blogpost
+  const { data } = await client.query({ query: GET_BLOGPOST, variables: { slug: slug } });
+  return data
+
+
 }
 
 export const getSlugs = async () => {
@@ -60,8 +60,10 @@ export const getSlugs = async () => {
       }
     }
   `);
-  const { loading, data } = useQuery(
-    GET_SLUGS
-  );
-  return data?.blogposts
+
+
+  const { data } = await client.query({ query: GET_SLUGS });
+  return data
+
+
 }

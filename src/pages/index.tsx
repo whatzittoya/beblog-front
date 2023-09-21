@@ -3,46 +3,31 @@ import Style from "../styles/Home.module.css";
 import Image from "next/image";
 // import { GraphQLClient, gql } from "graphql-request";
 import Link from "next/link";
-import { getBlogposts } from "@/services";
+import { getBlogposts } from "@/services/server-side";
+import { getBlogpostsClient } from "@/services/client-side";
 import type { InferGetServerSidePropsType } from 'next'
 import { gql, useQuery } from "@apollo/client";
-import createApolloClient from "../../apollo-client";
-
+import { useEffect, useState } from "react";
 
 export async function getStaticProps() {
+  const data = await getBlogposts()
+  const blogposts = data?.blogposts
 
-  // making request to hygraph for posts
-  const blogposts = await getBlogposts()
   return { props: { blogposts } };
 
-  // const client = createApolloClient();
-  // const { data } = useQuery(
-  //   gql`
-  //     query getBlogposts {
-  //     blogposts {
-  //       title
-  //       slug
-  //       coverImage {
-  //         url
-  //       }
-  //       excerpt
-  //       id
-  //       author {
-  //         name
-  //       }
-  //     }
-  //   }
-  //   `,
-  // );
-
-  // return {
-  //   props: {
-  //     blogposts: data.blogposts,
-  //   },
-  // };
 }
 
-function Homepage({ blogposts }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+
+function Homepage({ blogposts }: InferGetServerSidePropsType<typeof getStaticProps>) {
+
+
+  // const q = use(getData())
+
+  // const { data, loading } = getBlogpostsClient()
+
+  // if (loading) return 'Loading...';
+
+  // const blogposts = data?.blogposts
   return (
     <>
       <Head>
