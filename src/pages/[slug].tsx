@@ -51,7 +51,7 @@ function SinglePost({ post, source }: InferGetServerSidePropsType<typeof getStat
           <h3>Author: {post?.author?.name}</h3>
         </div>
         <div className={Style.img}>
-          <Image src={post?.coverImage?.url || ""} alt={post?.coverImage?.altText} fill />
+          <Image src={post?.coverImage?.url || ""} alt={post?.coverImage?.altText || ""} fill />
         </div>
 
         <div className={Style.mdxs}>
