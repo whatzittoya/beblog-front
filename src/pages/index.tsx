@@ -4,7 +4,7 @@ import Image from "next/image";
 // import { GraphQLClient, gql } from "graphql-request";
 import Link from "next/link";
 import { getBlogposts } from "@/services/server-side";
-import { getBlogpostsClient } from "@/services/client-side";
+import { GetBlogpostsClient } from "@/services/client-side";
 import type { InferGetServerSidePropsType } from 'next'
 import { gql, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";

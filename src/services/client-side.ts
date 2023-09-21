@@ -2,8 +2,8 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "@/__generated__/gql";
 
-export const getBlogpostsClient = () => {
-    const GetBlogposts = gql(/* GraphQL */ `
+export const GetBlogpostsClient = () => {
+    const GET_BLOGPOSTS = gql(/* GraphQL */ `
       query getBlogposts {
         blogposts {
           title
@@ -20,7 +20,7 @@ export const getBlogpostsClient = () => {
       }
     `
     )
-    const all = useQuery(GetBlogposts);
+    const all = useQuery(GET_BLOGPOSTS);
 
     return all
 }
