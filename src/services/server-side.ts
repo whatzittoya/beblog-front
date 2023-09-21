@@ -30,7 +30,7 @@ export const getBlogposts = async () => {
   if (localData)
     return blogpost.data
 
-  const { data } = await client.query({ query: GET_BLOGPOSTS, fetchPolicy: "network-only" });
+  const { data } = await client.query({ query: GET_BLOGPOSTS });
   return data
 
 
@@ -60,7 +60,7 @@ export const getBlogpost = async (slug) => {
     return data_filter
   }
 
-  const { data } = await client.query({ query: GET_BLOGPOST, variables: { slug: slug }, fetchPolicy: "network-only" });
+  const { data } = await client.query({ query: GET_BLOGPOST, variables: { slug: slug } });
 
   return data
 
