@@ -51,8 +51,8 @@ function SinglePost({ post, source }: InferGetServerSidePropsType<typeof getStat
         <title>Blog</title>
       </Head>
 
-      <article className='prose prose-sm md:prose-base lg:prose-lg prose-slate !prose-invert mx-auto '>
-        <div className={Style.header}>
+      <article className='prose prose-sm md:prose-base lg:prose-lg prose-slate !prose-invert mx-auto  bg-slate-900 '>
+        <div className="pt-3">
           <h1>{post?.title}</h1>
           <h3>Author: {post?.author?.name}</h3>
         </div>

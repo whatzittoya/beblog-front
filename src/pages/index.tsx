@@ -34,13 +34,13 @@ function Homepage({ blogposts }: InferGetServerSidePropsType<typeof getStaticPro
         <title>Beblog</title>
       </Head>
 
-      <div className='py-2'>
+      <div className='py-2 bg-slate-900 flex flex-col'>
         {/* using array.map() method to iterate each post returned from hygraph */}
         {blogposts?.map((blogposts) => {
 
           return (
             <Link href={blogposts.slug} passHref key={blogposts.id}>
-              <div className='py-2 flex align-middle gap-2 justify-center'>
+              <div className='py-2 flex flex-col-reverse sm:flex-row align-middle gap-2 justify-center hover:bg-slate-800 p-5'>
 
                 <div className={Style.container}>
                   <h2 className="text-lg font-bold">{blogposts.title}</h2>
