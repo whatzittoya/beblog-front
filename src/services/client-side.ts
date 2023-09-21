@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { gql } from "@/__generated__/gql";
 
 export const getBlogpostsClient = () => {
-    const GET_BLOGPOSTS = gql(/* GraphQL */ `
+    const GetBlogposts = gql(/* GraphQL */ `
       query getBlogposts {
         blogposts {
           title
@@ -20,7 +20,7 @@ export const getBlogpostsClient = () => {
       }
     `
     )
-    const all = useQuery(GET_BLOGPOSTS);
+    const all = useQuery(GetBlogposts);
 
     return all
 }
