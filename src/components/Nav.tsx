@@ -12,11 +12,11 @@ function Nav({ navActive, setNavActive }) {
 
 
   return (
-    <div className={Style.navBar}>
+    <div className={Style.navBar + ' bg-gradient-to-r from-blue-800 to-indigo-900'}>
 
       <Link href={"/"} onClick={() => {
         setNavActive(false)
-      }}><h1>Belajar Fisika</h1></Link>
+      }}><h1 className="font-mono text-2xl">Belajar Fisika</h1></Link>
       <div
         className={Style.mobiNav}
         onClick={() => {
